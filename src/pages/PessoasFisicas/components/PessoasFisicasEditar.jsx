@@ -28,12 +28,14 @@ export function PessoasFisicasEditar() {
         if (pessoa.endereco.cep.value.length === 0) return;
         (async () => {
             let result = await fetch(`https://opencep.com/v1/${pessoa.endereco.cep.value.replace("-", "")}`).then(response => response.json());
-            setPessoa({ ...pessoa, endereco: { ...pessoa.endereco,
-                rua: { value: result.logradouro },
-                bairro: { value: result.bairro },
-                cidade: { value: result.localidade },
-                estado: { value: result.uf }
-            }});
+            if (result.error == undefined) {
+                setPessoa({ ...pessoa, endereco: { ...pessoa.endereco,
+                    rua: { value: result.logradouro },
+                    bairro: { value: result.bairro },
+                    cidade: { value: result.localidade },
+                    estado: { value: result.uf }
+                }});
+            }
         })();
     }, [pessoa.endereco.cep]);
 
