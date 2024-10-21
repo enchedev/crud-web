@@ -25,7 +25,7 @@ export function PessoasJuridicasEditar() {
     };
 
     useEffect(() => {
-        if (pessoa.endereco.cep.value.length === 0) return;
+        if (pessoa.endereco.cep.value.includes("_") || pessoa.endereco.cep.value.length < 8) return;
         (async () => {
             let result = await fetch(`https://opencep.com/v1/${pessoa.endereco.cep.value.replace("-", "")}`).then(response => response.json());
             if (result.error == undefined) {
