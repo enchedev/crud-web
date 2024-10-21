@@ -1,6 +1,15 @@
+@font-face {
+  font-family: 'Mona Sans';
+  src:
+    url('Mona-Sans.woff2') format('woff2 supports variations'),
+    url('Mona-Sans.woff2') format('woff2-variations');
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+}
+
 body, html {
     margin: 0px;
     padding: 0px;
-    font-family: sans-serif;
+    font-family: 'Mona Sans', sans-serif;
     background: #151515;
 }
