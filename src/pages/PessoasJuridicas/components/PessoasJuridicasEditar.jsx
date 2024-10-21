@@ -43,7 +43,7 @@ export function PessoasJuridicasEditar() {
         <div>
             <TabForm
                 header="Pessoa Jurídica"
-                icon="fa fa-user"
+                icon="fa fa-building"
                 service={pessoasJuridicasService}
                 value={pessoa}
                 setValue={setPessoa}
