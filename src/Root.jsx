@@ -19,7 +19,7 @@ export default function Root() {
                     <div style={{display: "flex", justifyContent: "center", width: "100%", position: "absolute", bottom: "0%"}}>
                         <p style={{opacity: "0.7"}}>
                             Made with 🍻 by
-                                <i style={{color: "rgb(159, 168, 218)", cursor: "pointer"}} onClick={() => window.location.href = "https://github.com/enchedev"}>EncheDev</i>
+                                <span style={{color: "rgb(159, 168, 218)", cursor: "pointer"}} onClick={() => window.location.href = "https://github.com/enchedev"}> EncheDev </span>
                         </p>
                     </div>
                 </div>
