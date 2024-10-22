@@ -7,16 +7,20 @@ import { InputNumber } from "../../../components/InputNumber";
 import { Calendar } from "../../../components/Calendar";
 import { TabForm } from "../../../components/TabForm";
 import { atualizarObjeto } from "../../../utils/objetos";
+import { useNotification } from "../../../contexts/NotificationContext";
+import { useParams } from "react-router-dom";
 
 export function PessoasFisicasEditar() {
     const [pessoa, setPessoa] = useState(pessoasFisicasService.criar());
+    const { showNotification } = useNotification();
+    const { id } = useParams();
 
     const handleChange = ({ key, value }) => {
         setPessoa(atualizarObjeto(pessoa, key, value));
     };
 
     useEffect(() => {
-        if (pessoa.endereco.cep.value.includes("_") || pessoa.endereco.cep.value.length < 8) return;
+        if (id !== "new" || pessoa.endereco.cep.value.includes("_") || pessoa.endereco.cep.value.length < 8) return;
         (async () => {
             let result = await fetch(`https://opencep.com/v1/${pessoa.endereco.cep.value.replace("-", "")}`).then(response => response.json());
             if (result.error == undefined) {
@@ -26,6 +30,8 @@ export function PessoasFisicasEditar() {
                     cidade: { value: result.localidade },
                     estado: { value: result.uf }
                 }});
+            } else {
+                showNotification({ severity: "warn", detail: "Could not retrieve postal code information" });
             }
         })();
     }, [pessoa.endereco.cep]);
