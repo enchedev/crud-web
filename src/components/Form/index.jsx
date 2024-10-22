@@ -3,22 +3,22 @@ import { useNotification } from "../../contexts/NotificationContext";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
-import { decairObjeto } from "../../utils/validacoes";
+import { decairObjeto } from "../../utils/objetos";
 
-export function Form({ header, icon, service, query, setValue, children }) {
+export function Form({ header, icon, service, query, setQuery, children }) {
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
-    const handleListar = async (query) => {
+    const handleListar = async () => {
         try {
-            setValue(await service.listar(query != null ? decairObjeto(query) : query));
+            setQuery({ ...query, data: await service.listar(query != null ? decairObjeto(query) : query) });
         } catch (exception) {
             showNotification({ severity: "error", detail: exception.error.message });
         }
     };
 
     useEffect(() => {
-        (async () => await handleListar(null))();
+        (async () => handleListar())();
     }, []);
 
     return (
@@ -33,7 +33,7 @@ export function Form({ header, icon, service, query, setValue, children }) {
                     { children }
                 </div>
                 <div style={{display: "flex", justifyContent: "right", gap: "10px"}}>
-                    <Button size="large" icon="fa fa-magnifying-glass" label="Procurar" onClick={async () => handleListar(query)}/>
+                    <Button size="large" icon="fa fa-magnifying-glass" label="Procurar" onClick={handleListar}/>
                     <Button size="large" icon="fa fa-plus" label="Novo" onClick={() => navigate("new")}/>
                 </div>
             </div>

@@ -5,7 +5,7 @@ export function InputNumber(props) {
     const [focused, setFocused] = useState(false);
 
     const handleChange = (e) => {
-        props.onChange?.({ key: props.id, value: { required: props.required, value: e.value }});
+        props.onChange?.({ key: props.id, value: { required: props.required || false, value: e.value }});
     };
 
     return (

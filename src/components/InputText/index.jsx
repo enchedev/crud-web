@@ -5,7 +5,7 @@ export function InputText(props) {
     const [focused, setFocused] = useState(false);
 
     const handleChange = (e) => {
-        props.onChange?.({ key: props.id, value: { required: props.required, value: e.target.value }});
+        props.onChange?.({ key: props.id, value: { required: props.required || false, value: e.target.value }});
     };
 
     return (

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useDialog } from "../../contexts/DialogContext";
 import { ConfirmationDialog } from "../ConfirmationDialog";
 import { Dialog } from "primereact/dialog";
-import { decairObjeto, promoverObjeto } from "../../utils/validacoes";
+import { decairObjeto, promoverObjeto } from "../../utils/objetos";
 
 export function TabForm({ header, icon, service, value, setValue, children }) {
     const navigate = useNavigate();
@@ -37,10 +37,10 @@ export function TabForm({ header, icon, service, value, setValue, children }) {
 
         try {
             await service.atualizar(id, decairObjeto(value));
+            showNotification({ severity: "success", detail: "Updated successfully!" });
         } catch (exception) {
             showNotification({ severity: "error", detail: exception.error.message });
         }
-        showNotification({ severity: "success", detail: "Updated successfully!" });
         return true;
     };
 
@@ -53,20 +53,20 @@ export function TabForm({ header, icon, service, value, setValue, children }) {
 
         try {
             await service.salvar(decairObjeto(value));
+            showNotification({ severity: "success", detail: "Saved successfully!" });
         } catch (exception) {
             showNotification({ severity: "error", detail: exception.error.message });
         }
-        showNotification({ severity: "success", detail: "Saved successfully!" });
         return true;
     };
 
     const handleDeletar = async (id) => {
         try {
             await service.deletar(id);
+            showNotification({ severity: "success", detail: "Deleted successfully!" });
         } catch (exception) {
             showNotification({ severity: "error", detail: exception.error.message });
         }
-        showNotification({ severity: "success", detail: "Deleted successfully!" });
     };
 
     return (

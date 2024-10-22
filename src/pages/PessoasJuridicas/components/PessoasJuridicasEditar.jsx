@@ -6,22 +6,13 @@ import { InputNumber } from "../../../components/InputNumber";
 import { Calendar } from "../../../components/Calendar";
 import { pessoasJuridicasService } from "../pessoaJuridicaService";
 import { TabForm } from "../../../components/TabForm";
+import { atualizarObjeto } from "../../../utils/objetos";
 
 export function PessoasJuridicasEditar() {
     const [pessoa, setPessoa] = useState(pessoasJuridicasService.criar());
 
-    const handleChange = ({ key, value, parent, recurse = false }) => {
-        if (!(key.includes(".") || recurse)) setPessoa({ ...pessoa, [key]: value });
-        let keys = key.split(".");
-        if (keys.length > 1) {
-            if (typeof(pessoa[keys[0]]) === "object") {
-                setPessoa({ ...pessoa, [keys[0]]: handleChange({ key: keys.slice(1).join("."), value, parent: pessoa[keys[0]], recurse: true }) });
-            } else {
-                return { ...parent, [keys[0]]: handleChange({ key: keys.slice(1).join("."), value, recurse: true }) };
-            }
-        } else {
-            return { ...parent, [key]: value };
-        }
+    const handleChange = ({ key, value }) => {
+        setPessoa(atualizarObjeto(pessoa, key, value));
     };
 
     useEffect(() => {

@@ -28,11 +28,18 @@ export function decairObjeto(value) {
     return object;
 }
 
-export function campoObrigatorio(value) {
-    return { required: true, value };
-}
-
-export function campoOpcional(value) {
-    return { required: false, value };
+export function atualizarObjeto(object, key, value, parent, recurse = false) {
+    if (!(key.includes(".") || recurse)) return { ...object, [key]: value };
+    let keys = key.split(".");
+    if (keys.length > 1) {
+        if (typeof(object[keys[0]]) === "object") {
+            object = { ...object, [keys[0]]: atualizarObjeto(object, keys.slice(1).join("."), value, object[keys[0]], true ) };
+        } else {
+            return { ...parent, [keys[0]]: atualizarObjeto(object, keys.slice(1).join("."), value, true ) };
+        }
+    } else {
+        return { ...parent, [key]: value };
+    }
+    return object;
 }
 

@@ -1,15 +1,16 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { pessoasJuridicasService } from "./pessoaJuridicaService";
 import { Form } from "../../components/Form";
 import { PessoasJuridicasFiltro } from "./components/PessoasJuridicasFiltro";
 import { PessoasJuridicasTabela } from "./components/PessoasJuridicasTabela";
+import { campoOpcional } from "../../utils/validacoes";
+import { atualizarObjeto } from "../../utils/objetos";
 
 export function PessoasJuridicas() {
-    const [pessoasJuridicas, setPessoasJuridicas] = useState([]);
-    const [query, setQuery] = useState({ nome: { value: "" }, nomeFantasia: { value: "" }, cnpj: { value: "" } });
+    const [query, setQuery] = useState({ data: [], nome: campoOpcional(""), nomeFantasia: campoOpcional(""), cnpj: campoOpcional("") });
 
     const handleChange = ({ key, value }) => {
-        setQuery({ ...query, [key]: value });
+        setQuery(atualizarObjeto(query, key, value));
     }
 
     return (
@@ -19,11 +20,11 @@ export function PessoasJuridicas() {
                 icon="fa fa-building"
                 service={pessoasJuridicasService}
                 query={query}
-                setValue={setPessoasJuridicas}
+                setQuery={setQuery}
             >
                 <PessoasJuridicasFiltro query={query} handleChange={handleChange} />
             </Form>
-            <PessoasJuridicasTabela value={useMemo(() => pessoasJuridicas, [pessoasJuridicas])}/>
+            <PessoasJuridicasTabela value={query.data}/>
         </div>
     );
 }
