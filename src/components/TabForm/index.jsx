@@ -28,7 +28,6 @@ export function TabForm({ header, icon, service, value, setValue, children }) {
     }, [id]);
 
     const handleAtualizar = async (value) => {
-        console.log(value);
         let camposNaoPreenchidos = service.validar(value);
         if (camposNaoPreenchidos) {
             showDialog(<Dialog header="Aviso">Existem <b>{camposNaoPreenchidos}</b> campo(s) não preenchido(s)!</Dialog>);

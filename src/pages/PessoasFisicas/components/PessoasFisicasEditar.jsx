@@ -34,7 +34,7 @@ export function PessoasFisicasEditar() {
                 showNotification({ severity: "warn", detail: "Could not retrieve postal code information" });
             }
         })();
-    }, [pessoa.endereco.cep]);
+    }, [pessoa.endereco.cep.value]);
 
     return (
         <div>
